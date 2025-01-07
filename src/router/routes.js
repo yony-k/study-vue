@@ -3,20 +3,30 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Board.vue') },
+      { path: '', component: () => import('pages/Home.vue') },
       {
-        path: '/newBoard',
-        component: () => import('pages/Board.vue'),
+        path: 'board',
+        component: () => import('layouts/BoardLayout.vue'),
+        children: [
+          {
+            path: 'new',
+            component: () => import('pages/NewBoard.vue'),
+          },
+          {
+            path: 'best',
+            component: () => import('pages/BestBoard.vue'),
+          },
+        ],
       },
       {
-        path: '/bestBoard',
-        component: () => import('pages/Board.vue'),
+        path: 'serch/:keyword',
+        name: 'serch',
+        component: () => import('pages/Serch.vue'),
+        props: route => ({ keyword: String(route.params.serch) }),
       },
       {
-        path: '/board/:pnum',
-        name: 'post',
-        component: () => import('pages/Post.vue'),
-        props: route => ({ pnum: Number(route.params.pnum) }),
+        path: 'apiTest',
+        component: () => import('pages/ApiTest.vue'),
       },
     ],
   },
